@@ -32,7 +32,7 @@ type Direction =
 
 type Preset = 'simple' | 'duo-move' | 'triple-woosh' | 'content-move';
 
-interface Props {
+interface MultiLayerPageRevealProps {
   children?: JSX.Element | JSX.Element[];
   direction?: Direction;
   layerColors?: string[];
@@ -49,12 +49,12 @@ interface RevealerDivProps {
   windowWidth: number;
 }
 
-interface MultiLayerPageRevealcontextValues {
+interface MultiLayerPageRevealContextValues {
   reveal: (callback?: () => void, callbackTime?: number) => void;
 }
 
-const MultiLayerPageRevealContext = createContext(
-  {} as MultiLayerPageRevealcontextValues
+export const MultiLayerPageRevealContext = createContext(
+  {} as MultiLayerPageRevealContextValues
 );
 
 const getStyles = ({ direction, isAnimating }: RevealerDivProps) => {
@@ -201,15 +201,15 @@ export const MultiLayerPageReveal = ({
   onEnd,
   layerColors,
   children,
-}: Props) => {
+}: MultiLayerPageRevealProps) => {
   const [windowSize, setWindowSize] = useState({
     windowWidth: 0,
     windowHeight: 0,
   });
   const [isAnimating, setAnimating] = useState(false);
   const refRevealer = useRef<HTMLDivElement>(null);
-  const refLayers = useRef<HTMLDivElement[]>([]);
   const refTimer = useRef<ReturnType<typeof setTimeout>>();
+  const refLayersCounter = useRef(0);
 
   const config = useMemo(() => {
     let currentConfig = presetConfig[preset as keyof typeof presetConfig];
@@ -230,6 +230,18 @@ export const MultiLayerPageReveal = ({
 
   const { windowWidth, windowHeight } = windowSize;
 
+  const onEndAnimation = () => {
+    ++refLayersCounter.current;
+
+    if (refLayersCounter.current === config.numOfLayers) {
+      setAnimating(false);
+      refLayersCounter.current = 0;
+      if (onEnd && typeof onEnd === 'function') {
+        onEnd(direction);
+      }
+    }
+  };
+
   const addLayers = () => {
     const layers = [];
     for (let i = 0; i < config.numOfLayers; i++) {
@@ -237,58 +249,28 @@ export const MultiLayerPageReveal = ({
         <RevealerLayerDiv
           key={i}
           style={{ background: config.layerColors[i] }}
-          ref={(el) => {
-            if (refLayers) {
-              refLayers.current[i] = el as HTMLDivElement;
-            }
-          }}
+          onAnimationEnd={onEndAnimation}
         />
       );
     }
     return layers;
   };
 
-  const onEndAnimation = (el: HTMLElement, callback: () => void) => {
-    const onEndCallbackFn = (ev: Event) => {
-      if (ev.target !== el) return;
-      el.removeEventListener('animationend', onEndCallbackFn);
-      if (callback && typeof callback === 'function') {
-        callback();
-      }
-    };
-    el.addEventListener('animationend', onEndCallbackFn);
-  };
-
   const reveal = (callback?: () => void, callbackTime?: number) => {
-    let layersCompleted = 0;
     setAnimating(true);
     if (onStart && typeof onStart === 'function') {
       onStart(direction);
     }
 
-    if (refLayers.current?.length) {
-      refLayers.current.forEach((layer) => {
-        onEndAnimation(layer, () => {
-          ++layersCompleted;
-          if (layersCompleted === config.numOfLayers) {
-            setAnimating(false);
-            if (onEnd && typeof onEnd === 'function') {
-              onEnd(direction);
-            }
-          }
-        });
-      });
-
-      if (refTimer.current) {
-        clearTimeout(refTimer.current);
-      }
-
-      refTimer.current = setTimeout(() => {
-        if (callback && typeof callback === 'function') {
-          callback();
-        }
-      }, callbackTime);
+    if (refTimer.current) {
+      clearTimeout(refTimer.current);
     }
+
+    refTimer.current = setTimeout(() => {
+      if (callback && typeof callback === 'function') {
+        callback();
+      }
+    }, callbackTime);
   };
 
   const getRevealerStyle = () => {
@@ -337,14 +319,12 @@ export const MultiLayerPageReveal = ({
   );
 
   useLayoutEffect(() => {
-    function updateSize() {
-      debounce(() => {
-        setWindowSize({
-          windowWidth: window.innerWidth,
-          windowHeight: window.innerHeight,
-        });
-      }, 10)();
-    }
+    const updateSize = debounce(() => {
+      setWindowSize({
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
+      });
+    }, 100);
     window.addEventListener('resize', updateSize);
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
@@ -360,6 +340,7 @@ export const MultiLayerPageReveal = ({
         direction={direction}
         windowWidth={windowWidth}
         windowHeight={windowHeight}
+        data-testid="react-multilayer-page-reveal"
         style={{ ...getRevealerStyle() }}
       >
         {addLayers()}
