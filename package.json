@@ -1,13 +1,10 @@
 {
   "name": "react-multilayer-page-reveal",
-  "description": "",
+  "description": "React component that adds multi-layer page transitions using CSS Animations",
   "version": "0.0.0",
-  "author": "",
-  "license": "",
-  "keywords": [],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/abednego-s/react-multilayer-page-reveal"
   },
   "scripts": {
     "dev": "concurrently \"yarn build --watch\" \"yarn test:watch\" ",
