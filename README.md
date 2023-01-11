@@ -1,117 +1,93 @@
-# React Package Starter
+# React Multi-Layer Page Reveal
 
-This is a simple and slightly opinionated starter kit for developing and publishing React packages. It comes with a several pre-configured tools, so you could focus on coding instead of configuring a project for the nth time.
+A React component that adds multi-layer page transitions using CSS Animations. Inspired by Multi-Layer Page Reveal Effects by Codrops. Original repo: https://github.com/codrops/PageRevealEffects
 
-## Getting started
+## Installation
 
-```console
-npx degit TimMikeladze/tsup-react-package-starter my-react-package
+using npm
 
-yarn && yarn dev
+```bash
+  npm install react-multilayer-page-reveal styled-components
 ```
 
-❗Important note: This project uses [yarn](https://yarnpkg.com/) for managing dependencies. If you want to use another package manager, remove the `yarn.lock` and control-f for usages of `yarn` in the project and replace them with your package manager of choice.
+using yarn
 
-## What's included?
-
-- ⚡️[tsup](https://github.com/egoist/tsup) - The simplest and fastest way to bundle your TypeScript libraries. Used to bundle package as ESM and CJS modules. Supports TypeScript, Code Splitting, PostCSS, and more out of the box.
-- 🔗 [Yalc](https://github.com/wclr/yalc) - Better workflow than npm | yarn link for package authors.
-- 📖 [Storybook](https://storybook.js.org/) - Build UI components and pages in isolation. It streamlines UI development, testing, and documentation.
-- 🧪 [Jest](https://jestjs.io/) - A testing framework for JavaScript. Preconfigured to work with TypeScript and JSX.
-- 🔼 [Release-it](https://github.com/release-it/release-it/) - release-it is a command line tool to automatically generate a new GitHub Release and populates it with the changes (commits) made since the last release.
-- 🐙 [Test & Publish via Github Actions](https://docs.github.com/en/actions) - CI/CD workflows for your package. Run tests on every commit plus integrate with Github Releases to automate publishing package to NPM and Storybook to Github Pages.
-- 📄 [Commitizen](https://github.com/commitizen/cz-cli) — When you commit with Commitizen, you'll be prompted to fill out any required commit fields at commit time.
-- 🚓 [Commitlint](https://github.com/conventional-changelog/commitlint) — Checks that your commit messages meet the conventional commit format.
-- 🐶 [Husky](https://github.com/typicode/husky) — Running scripts before committing.
-- 🚫 [lint-staged](https://github.com/okonet/lint-staged) — Run linters on git staged files
-- 🖌 [Renovate](https://github.com/renovatebot/renovate) - Universal dependency update tool that fits into your workflows. Configured to periodically check your dependencies for updates and send automated pull requests.
-- ☑️ [ESLint](https://eslint.org/) - A linter for JavaScript. Includes a simple configuration for React projects based on the recommended ESLint and AirBnB configs.
-- 🎨 [Prettier](https://prettier.io/) - An opinionated code formatter.
-
-## Usage
-
-### Developing
-
-Watch and rebuild code with `tsup` and runs Storybook to preview your UI during development.
-
-```console
-yarn dev
+```bash
+  yarn add react-multilayer-page-reveal styled-components
 ```
 
-Run tests with `jest` when changes are detected.
+## Usage/Examples
 
-```console
-yarn test:watch
+Wrap your components inside `MultiLayerPageReveal` component
+
+```javascript
+import React from 'react';
+import { MultiLayerPageReveal } from 'react-multilayer-page-reveal';
+import { MyComponent } from './MyComponent';
+
+function App() {
+  function onStart() {
+    console.log('animation start');
+  }
+
+  function onEnd() {
+    console.log('animation end');
+  }
+
+  return (
+    <MultiLayerPageReveal
+      preset="duo-move"
+      direction="left"
+      onStart={onStart}
+      onEnd={onEnd}
+    >
+      <MyComponent />
+    </MultiLayerPageReveal>
+  );
+}
 ```
 
-### Building
+Start the animation by calling `reveal()` function from `useMultiLayerPageReveal` hook
 
-Build package with `tsup` for production.
+```javascript
+function MyComponent() {
+  const { reveal } = useMultiLayerPageReveal();
 
-```console
-yarn build
+  function handleReveal() {
+    reveal();
+  }
+
+  return (
+    <>
+      <h1>Hello world</h1>
+      <button onClick={handleReveal}>Go</button>
+    </>
+  );
+}
 ```
 
-### Linking
+Start the animation with a callback function
 
-Often times you want to `link` the package you're developing to another project locally to test it out to circumvent the need to publish it to NPM.
-
-For this we use [yalc](https://github.com/wclr/yalc) which is a tool for local package development and simulating the publishing and installation of packages.
-
-In a project where you want to consume your package simply run:
-
-```console
-npx yalc link my-react-package
-# or
-yarn yalc add my-react-package
+```javascript
+function MyComponent() {
+    ...
+    // Do something after page transision effect ends.
+    function handleReveal() {
+        reveal(() => {
+            console.log('hello')
+        }, 750);
+    }
+    ...
+    <button onClick={handleReveal}>Go</button>
+}
 ```
 
-Learn more about `yalc` [here](https://github.com/wclr/yalc).
+## Props
 
-### Testing
-
-To run all tests once without watching for changes.
-
-```console
-yarn test
-```
-
-To watch for changes and run tests.
-
-```
-yarn test:watch
-```
-
-### Committing
-
-When you are ready to commit simply run the following command to get a well formatted commit message. All staged files will automatically be linted and fixed as well.
-
-```console
-yarn commit
-```
-
-### Releasing, tagging & publishing to NPM
-
-Create a semantic version tag and publish to Github Releases. When a new release is detected a Github Action will automatically build the package and publish it to NPM. Additionally, a Storybook will be published to Github pages.
-
-Learn more about how to use the `release-it` command [here](https://github.com/release-it/release-it).
-
-```console
-yarn release
-```
-
-When you are ready to publish to NPM simply run the following command:
-
-```console
-yarn publish
-```
-
-#### Auto publish after Github Release
-
-❗Important note: in order to publish package to NPM you must add your token as a Github Action secret. Learn more on how to configure your repository and publish packages through Github Actions [here](https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages).
-
-## PostCSS
-
-[tsup](https://github.com/egoist/tsup) supports PostCSS out of the box. Simply run `yarn add postcss -D` add a `postcss.config.js` file to the root of your project, then add any plugins you need. Learn more how to configure PostCSS [here](https://tsup.egoist.dev/#css-support).
-
-Additionally consider using the [tsup](https://github.com/egoist/tsup) configuration option `injectStyle` to inject the CSS directly into your Javascript bundle instead of outputting a separate CSS file.
+| Prop          | Required | Type     | Description                                                                                                                                                                                                                                                                                                                   |
+| :------------ | :------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `preset`      | No       | String   | 'simple', 'duo-move', 'triple-woosh', 'content-move'. Default: 'simple'                                                                                                                                                                                                                                                       |
+| `direction`   | No       | String   | 'left', 'right', 'top', 'bottom', 'cornerTopLeft', 'cornerTopRight', 'cornerBottomLeft', 'cornerBottomRight'. Default: "right"                                                                                                                                                                                                |
+| `onEnd`       | No       | Function | Callback function when animation ends                                                                                                                                                                                                                                                                                         |
+| `onStart`     | No       | Function | Callback function when animation starts                                                                                                                                                                                                                                                                                       |
+| `layerColors` | No       | Array    | Array of colors, e.g: ['#fff', '#ddd']. "simple" preset requires 1 color, "duo-move" requires 2 colors, "tripe-woosh" and "content-move" require 3 colors. Default: "simple": ['#202023'], "duo-move": ['#202023', '#3d4a41'], "triple-woosh": ['#0092dd', '#fff', '#3e3a35'], "content-move": ['#202023', '#555', '#d1d1d1'] |
