@@ -2,6 +2,12 @@
 
 A React component that adds multi-layer page transitions using CSS Animations. Inspired by Multi-Layer Page Reveal Effects by Codrops. Original repo: https://github.com/codrops/PageRevealEffects
 
+<br />
+
+[Demo](https://codesandbox.io/p/sandbox/react-multilayer-page-reveal-example-i3wfmc?file=%2Fsrc%2FApp.tsx)
+
+<br />
+
 ## Installation
 
 using npm
