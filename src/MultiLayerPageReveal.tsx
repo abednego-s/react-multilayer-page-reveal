@@ -214,16 +214,18 @@ export const MultiLayerPageReveal = ({
   const config = useMemo(() => {
     let currentConfig = presetConfig[preset as keyof typeof presetConfig];
     if (layerColors) {
-      if (layerColors.length === currentConfig.layerColors.length) {
-        currentConfig = {
-          ...currentConfig,
-          layerColors,
-        };
-      } else {
+      if (!Array.isArray(layerColors)) {
+        throw new Error('layerColors is not an array.');
+      }
+      if (layerColors.length !== currentConfig.layerColors.length) {
         throw new Error(
-          `"${preset}" effect should have ${currentConfig.layerColors.length} layer colors`
+          `"${preset}" effect takes ${currentConfig.layerColors.length} layer colors. ${layerColors.length} is given.`
         );
       }
+      currentConfig = {
+        ...currentConfig,
+        layerColors,
+      };
     }
     return currentConfig;
   }, [layerColors]);
