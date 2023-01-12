@@ -106,8 +106,6 @@ test('should render with custom layer colors', () => {
 });
 
 test('should throw an error if custom layer colors invalid', () => {
-  jest.spyOn(console, 'error');
-
   expect(() => {
     render(
       <MultiLayerPageRevealProvider preset="duo-move" layerColors={['#fff']}>
