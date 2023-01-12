@@ -24,11 +24,11 @@ using yarn
 
 ## Usage/Examples
 
-Wrap your components inside `MultiLayerPageReveal` component
+Wrap your components inside `MultiLayerPageRevealProvider` component
 
 ```javascript
 import React from 'react';
-import { MultiLayerPageReveal } from 'react-multilayer-page-reveal';
+import { MultiLayerPageRevealProvider } from 'react-multilayer-page-reveal';
 import { MyComponent } from './MyComponent';
 
 function App() {
@@ -41,14 +41,14 @@ function App() {
   }
 
   return (
-    <MultiLayerPageReveal
+    <MultiLayerPageRevealProvider
       preset="duo-move"
       direction="left"
       onStart={onStart}
       onEnd={onEnd}
     >
       <MyComponent />
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 }
 ```
