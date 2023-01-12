@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {
-  MultiLayerPageReveal,
+  MultiLayerPageRevealProvider,
   useMultiLayerPageReveal,
 } from '../src/MultiLayerPageReveal';
 
@@ -24,9 +24,9 @@ const Demo = ({ revealCallback }: { revealCallback?: () => void }) => {
 };
 test('should render with "top" direction', () => {
   const container = render(
-    <MultiLayerPageReveal direction="top">
+    <MultiLayerPageRevealProvider direction="top">
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -34,9 +34,9 @@ test('should render with "top" direction', () => {
 
 test('should render with "bottom" direction', () => {
   const container = render(
-    <MultiLayerPageReveal direction="bottom">
+    <MultiLayerPageRevealProvider direction="bottom">
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -44,9 +44,9 @@ test('should render with "bottom" direction', () => {
 
 test('should render with "left" direction', () => {
   const container = render(
-    <MultiLayerPageReveal direction="left">
+    <MultiLayerPageRevealProvider direction="left">
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -54,9 +54,9 @@ test('should render with "left" direction', () => {
 
 test('should render with "cornerTopLeft" direction', () => {
   const container = render(
-    <MultiLayerPageReveal direction="cornerTopLeft">
+    <MultiLayerPageRevealProvider direction="cornerTopLeft">
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -64,9 +64,9 @@ test('should render with "cornerTopLeft" direction', () => {
 
 test('should render with "cornerTopRight" direction', () => {
   const container = render(
-    <MultiLayerPageReveal direction="cornerTopRight">
+    <MultiLayerPageRevealProvider direction="cornerTopRight">
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -74,9 +74,9 @@ test('should render with "cornerTopRight" direction', () => {
 
 test('should render with "cornerBottomLeft" direction', () => {
   const container = render(
-    <MultiLayerPageReveal direction="cornerBottomLeft">
+    <MultiLayerPageRevealProvider direction="cornerBottomLeft">
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -84,9 +84,9 @@ test('should render with "cornerBottomLeft" direction', () => {
 
 test('should render with "cornerBottomRight" direction', () => {
   const container = render(
-    <MultiLayerPageReveal direction="cornerBottomRight">
+    <MultiLayerPageRevealProvider direction="cornerBottomRight">
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -94,9 +94,12 @@ test('should render with "cornerBottomRight" direction', () => {
 
 test('should render with custom layer colors', () => {
   const container = render(
-    <MultiLayerPageReveal preset="duo-move" layerColors={['#fff', '#ddd']}>
+    <MultiLayerPageRevealProvider
+      preset="duo-move"
+      layerColors={['#fff', '#ddd']}
+    >
       <h1>Hello World</h1>
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   expect(container).toMatchSnapshot();
@@ -107,9 +110,9 @@ test('should throw an error if custom layer colors invalid', () => {
 
   expect(() => {
     render(
-      <MultiLayerPageReveal preset="duo-move" layerColors={['#fff']}>
+      <MultiLayerPageRevealProvider preset="duo-move" layerColors={['#fff']}>
         <h1>Hello World</h1>
-      </MultiLayerPageReveal>
+      </MultiLayerPageRevealProvider>
     );
   }).toThrowError();
 });
@@ -118,18 +121,18 @@ test('should throw an error if custom layer colors is not an array', () => {
   expect(() => {
     render(
       // @ts-expect-error
-      <MultiLayerPageReveal preset="duo-move" layerColors="oo">
+      <MultiLayerPageRevealProvider preset="duo-move" layerColors="oo">
         <h1>Hello World</h1>
-      </MultiLayerPageReveal>
+      </MultiLayerPageRevealProvider>
     );
   }).toThrowError();
 });
 
 test('should render with "duo-move" preset', () => {
   const container = render(
-    <MultiLayerPageReveal preset="duo-move">
+    <MultiLayerPageRevealProvider preset="duo-move">
       <Demo />
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   fireEvent.click(container.getByRole('button'));
@@ -138,9 +141,9 @@ test('should render with "duo-move" preset', () => {
 
 test('should render with "triple-woosh" preset', () => {
   const container = render(
-    <MultiLayerPageReveal preset="triple-woosh">
+    <MultiLayerPageRevealProvider preset="triple-woosh">
       <Demo />
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   fireEvent.click(container.getByRole('button'));
@@ -149,9 +152,9 @@ test('should render with "triple-woosh" preset', () => {
 
 test('should render with "content-move" preset', () => {
   const container = render(
-    <MultiLayerPageReveal preset="content-move">
+    <MultiLayerPageRevealProvider preset="content-move">
       <Demo />
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   fireEvent.click(container.getByRole('button'));
@@ -164,9 +167,12 @@ test('should execute callbacks', async () => {
   const onEndCallbackFn = jest.fn();
 
   const { getByRole, getByTestId } = render(
-    <MultiLayerPageReveal onStart={onStartCallbackFn} onEnd={onEndCallbackFn}>
+    <MultiLayerPageRevealProvider
+      onStart={onStartCallbackFn}
+      onEnd={onEndCallbackFn}
+    >
       <Demo revealCallback={callbackFn} />
-    </MultiLayerPageReveal>
+    </MultiLayerPageRevealProvider>
   );
 
   fireEvent.click(getByRole('button'));

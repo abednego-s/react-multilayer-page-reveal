@@ -32,7 +32,7 @@ type Direction =
 
 type Preset = 'simple' | 'duo-move' | 'triple-woosh' | 'content-move';
 
-interface MultiLayerPageRevealProps {
+interface Props {
   children?: JSX.Element | JSX.Element[];
   direction?: Direction;
   layerColors?: string[];
@@ -49,13 +49,11 @@ interface RevealerDivProps {
   windowWidth: number;
 }
 
-interface MultiLayerPageRevealContextValues {
+interface ContextValues {
   reveal: (callback?: () => void, callbackTime?: number) => void;
 }
 
-export const MultiLayerPageRevealContext = createContext(
-  {} as MultiLayerPageRevealContextValues
-);
+const MultiLayerPageRevealContext = createContext({} as ContextValues);
 
 const getStyles = ({ direction, isAnimating }: RevealerDivProps) => {
   const opacity = isAnimating ? '1' : '0';
@@ -194,14 +192,14 @@ const RevealerLayerDiv = styled.div`
   background: #ddd;
 `;
 
-export const MultiLayerPageReveal = ({
+export const MultiLayerPageRevealProvider = ({
   preset = 'simple',
   direction = 'right',
   onStart,
   onEnd,
   layerColors,
   children,
-}: MultiLayerPageRevealProps) => {
+}: Props) => {
   const [windowSize, setWindowSize] = useState({
     windowWidth: 0,
     windowHeight: 0,
