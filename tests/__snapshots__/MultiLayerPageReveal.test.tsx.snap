@@ -9,12 +9,11 @@ exports[`should render with "bottom" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe iiSOGR"
+        class="go3222113742 go2881691481"
         data-testid="react-multilayer-page-reveal"
-        direction="bottom"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
       </div>
@@ -25,12 +24,11 @@ exports[`should render with "bottom" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe iiSOGR"
+      class="go3222113742 go2881691481"
       data-testid="react-multilayer-page-reveal"
-      direction="bottom"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
     </div>
@@ -100,20 +98,19 @@ exports[`should render with "content-move" preset 1`] = `
         Click
       </button>
       <div
-        class="sc-bcXHqe hDEASY"
+        class="go3222113742 go321746154"
         data-testid="react-multilayer-page-reveal"
-        direction="right"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(85, 85, 85);"
         />
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(209, 209, 209);"
         />
       </div>
@@ -126,20 +123,19 @@ exports[`should render with "content-move" preset 1`] = `
       Click
     </button>
     <div
-      class="sc-bcXHqe hDEASY"
+      class="go3222113742 go321746154"
       data-testid="react-multilayer-page-reveal"
-      direction="right"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(85, 85, 85);"
       />
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(209, 209, 209);"
       />
     </div>
@@ -207,12 +203,11 @@ exports[`should render with "cornerBottomLeft" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe gumcaE"
+        class="go3222113742 go3865943372"
         data-testid="react-multilayer-page-reveal"
-        direction="cornerBottomLeft"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
       </div>
@@ -223,12 +218,11 @@ exports[`should render with "cornerBottomLeft" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe gumcaE"
+      class="go3222113742 go3865943372"
       data-testid="react-multilayer-page-reveal"
-      direction="cornerBottomLeft"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
     </div>
@@ -296,12 +290,11 @@ exports[`should render with "cornerBottomRight" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe gumcaE"
+        class="go3222113742 go3865943372"
         data-testid="react-multilayer-page-reveal"
-        direction="cornerBottomRight"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
       </div>
@@ -312,12 +305,11 @@ exports[`should render with "cornerBottomRight" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe gumcaE"
+      class="go3222113742 go3865943372"
       data-testid="react-multilayer-page-reveal"
-      direction="cornerBottomRight"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
     </div>
@@ -385,12 +377,11 @@ exports[`should render with "cornerTopLeft" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe gumcaE"
+        class="go3222113742 go3865943372"
         data-testid="react-multilayer-page-reveal"
-        direction="cornerTopLeft"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
       </div>
@@ -401,12 +392,11 @@ exports[`should render with "cornerTopLeft" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe gumcaE"
+      class="go3222113742 go3865943372"
       data-testid="react-multilayer-page-reveal"
-      direction="cornerTopLeft"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
     </div>
@@ -474,12 +464,11 @@ exports[`should render with "cornerTopRight" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe gumcaE"
+        class="go3222113742 go3865943372"
         data-testid="react-multilayer-page-reveal"
-        direction="cornerTopRight"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
       </div>
@@ -490,12 +479,11 @@ exports[`should render with "cornerTopRight" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe gumcaE"
+      class="go3222113742 go3865943372"
       data-testid="react-multilayer-page-reveal"
-      direction="cornerTopRight"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
     </div>
@@ -565,16 +553,15 @@ exports[`should render with "duo-move" preset 1`] = `
         Click
       </button>
       <div
-        class="sc-bcXHqe eIbVEg"
+        class="go3222113742 go482997485"
         data-testid="react-multilayer-page-reveal"
-        direction="right"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(61, 74, 65);"
         />
       </div>
@@ -587,16 +574,15 @@ exports[`should render with "duo-move" preset 1`] = `
       Click
     </button>
     <div
-      class="sc-bcXHqe eIbVEg"
+      class="go3222113742 go482997485"
       data-testid="react-multilayer-page-reveal"
-      direction="right"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(61, 74, 65);"
       />
     </div>
@@ -664,12 +650,11 @@ exports[`should render with "left" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe jlxsvc"
+        class="go3222113742 go1485058851"
         data-testid="react-multilayer-page-reveal"
-        direction="left"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
       </div>
@@ -680,12 +665,11 @@ exports[`should render with "left" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe jlxsvc"
+      class="go3222113742 go1485058851"
       data-testid="react-multilayer-page-reveal"
-      direction="left"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
     </div>
@@ -753,12 +737,11 @@ exports[`should render with "top" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe hKuOuy"
+        class="go3222113742 go3617245210"
         data-testid="react-multilayer-page-reveal"
-        direction="top"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(32, 32, 35);"
         />
       </div>
@@ -769,12 +752,11 @@ exports[`should render with "top" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe hKuOuy"
+      class="go3222113742 go3617245210"
       data-testid="react-multilayer-page-reveal"
-      direction="top"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(32, 32, 35);"
       />
     </div>
@@ -844,20 +826,19 @@ exports[`should render with "triple-woosh" preset 1`] = `
         Click
       </button>
       <div
-        class="sc-bcXHqe kLYLoE"
+        class="go3222113742 go946757840"
         data-testid="react-multilayer-page-reveal"
-        direction="right"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(0, 146, 221);"
         />
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(255, 255, 255);"
         />
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(62, 58, 53);"
         />
       </div>
@@ -870,20 +851,19 @@ exports[`should render with "triple-woosh" preset 1`] = `
       Click
     </button>
     <div
-      class="sc-bcXHqe kLYLoE"
+      class="go3222113742 go946757840"
       data-testid="react-multilayer-page-reveal"
-      direction="right"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(0, 146, 221);"
       />
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(255, 255, 255);"
       />
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(62, 58, 53);"
       />
     </div>
@@ -951,16 +931,15 @@ exports[`should render with custom layer colors 1`] = `
         Hello World
       </h1>
       <div
-        class="sc-bcXHqe bQoQRV"
+        class="go3222113742 go3046832752"
         data-testid="react-multilayer-page-reveal"
-        direction="right"
       >
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(255, 255, 255);"
         />
         <div
-          class="sc-gswNZR tiWkX"
+          class="go1672097441"
           style="background: rgb(221, 221, 221);"
         />
       </div>
@@ -971,16 +950,15 @@ exports[`should render with custom layer colors 1`] = `
       Hello World
     </h1>
     <div
-      class="sc-bcXHqe bQoQRV"
+      class="go3222113742 go3046832752"
       data-testid="react-multilayer-page-reveal"
-      direction="right"
     >
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(255, 255, 255);"
       />
       <div
-        class="sc-gswNZR tiWkX"
+        class="go1672097441"
         style="background: rgb(221, 221, 221);"
       />
     </div>

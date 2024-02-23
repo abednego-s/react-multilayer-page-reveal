@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styled, { css } from 'styled-components';
+import { styled, setup, css } from 'goober';
 import {
   animEffect1,
   animEffect21,
@@ -20,6 +20,8 @@ import {
 } from './keyframes';
 import { debounce } from './utils';
 
+setup(React.createElement);
+
 type Direction =
   | 'left'
   | 'right'
@@ -32,32 +34,34 @@ type Direction =
 
 type Preset = 'simple' | 'duo-move' | 'triple-woosh' | 'content-move';
 
-interface Props {
-  children?: JSX.Element | JSX.Element[];
+type Props = {
+  children?: React.ReactNode;
   direction?: Direction;
   layerColors?: string[];
   onEnd?: (direction: Direction) => void;
   onStart?: (direction: Direction) => void;
   preset?: Preset;
-}
+};
 
-interface RevealerDivProps {
+type RevealerProps = {
   direction?: Direction;
   isAnimating?: boolean;
   preset?: Preset;
-  windowHeight: number;
-  windowWidth: number;
-}
+};
 
-interface ContextValues {
+type ContextValues = {
   reveal: (callback?: () => void, callbackTime?: number) => void;
-}
+};
 
 const MultiLayerPageRevealContext = createContext({} as ContextValues);
 
-const getStyles = ({ direction, isAnimating }: RevealerDivProps) => {
+const RevealerClassName = ({
+  direction,
+  isAnimating,
+  preset,
+}: RevealerProps) => {
   const opacity = isAnimating ? '1' : '0';
-  let transform = '';
+  let allStyles = {};
 
   if (
     direction === 'cornerTopLeft' ||
@@ -65,95 +69,131 @@ const getStyles = ({ direction, isAnimating }: RevealerDivProps) => {
     direction === 'cornerBottomLeft' ||
     direction === 'cornerBottomRight'
   ) {
-    return css`
-      ${isAnimating ? 'top: 50%; left: 50%;' : null}
-      opacity: ${opacity};
-    `;
+    let style: Partial<CSSStyleDeclaration> = {
+      opacity,
+    };
+
+    if (isAnimating) {
+      style = {
+        ...style,
+        top: '50%',
+        left: '50%',
+      };
+    }
+
+    allStyles = {
+      ...allStyles,
+      ...style,
+    };
   }
 
   if (direction === 'top' || direction === 'bottom') {
-    transform = direction === 'top' ? 'rotate3d(0, 0, 1, 180deg)' : 'none';
+    const transform =
+      direction === 'top' ? 'rotate3d(0, 0, 1, 180deg)' : 'none';
 
-    return css`
-      left: 0;
-      width: 100vh;
-      height: 100vw;
-      ${direction === 'top' ? 'bottom: 100%;' : 'top: 100%;'}
-      transform: ${transform};
-      opacity: ${opacity};
-    `;
+    let style: Partial<CSSStyleDeclaration> = {
+      left: '0',
+      width: '100vh',
+      height: '100vw',
+      transform,
+      opacity,
+    };
+
+    if (direction === 'top') {
+      style = {
+        ...style,
+        bottom: '100%',
+        top: '100%',
+      };
+    }
+
+    allStyles = {
+      ...allStyles,
+      ...style,
+    };
   }
 
   if (direction === 'right' || direction === 'left') {
-    transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, ${
+    const transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, ${
       direction === 'left' ? 90 : -90
     }deg) translate3d(0,100%,0)`;
 
-    return css`
-      width: 100vh;
-      height: 100vw;
-      ${isAnimating ? 'top: 50%; left: 50%;' : null}
-      transform: ${transform};
-      opacity: ${opacity};
-    `;
+    let style: Partial<CSSStyleDeclaration> = {
+      width: '100vh',
+      height: '100vw',
+      transform,
+      opacity,
+    };
+
+    if (isAnimating) {
+      style = {
+        ...style,
+        top: '50%',
+        left: '50%',
+      };
+    }
+
+    allStyles = {
+      ...allStyles,
+      ...style,
+    };
   }
 
-  return null;
-};
-
-const getAnimationStyle = ({ preset, isAnimating }: RevealerDivProps) => {
   if (isAnimating) {
     if (preset === 'simple') {
-      return css`
-        & > ${RevealerLayerDiv} {
-          animation: ${animEffect1} 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
-        }
-      `;
+      allStyles = {
+        ...allStyles,
+        [`& > div`]: {
+          animation: `${animEffect1} 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards`,
+        },
+      };
     }
     if (preset === 'duo-move') {
-      return css`
-        & > ${RevealerLayerDiv} {
-          animation: ${animEffect21} 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
-          &:nth-child(2) {
-            animation-name: ${animEffect22};
-          }
-        }
-      `;
+      allStyles = {
+        ...allStyles,
+        [`& > div`]: {
+          animation: `${animEffect21} 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards`,
+          [`&:nth-child(2)`]: {
+            'animation-name': animEffect22,
+          },
+        },
+      };
     }
     if (preset === 'triple-woosh') {
-      return css`
-        & > ${RevealerLayerDiv} {
-          animation: ${animEffect31} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19)
-            forwards;
-          &:nth-child(2) {
-            animation-name: ${animEffect32};
-          }
-          &:nth-child(3) {
-            animation-name: ${animEffect33};
-          }
-        }
-      `;
+      allStyles = {
+        ...allStyles,
+        [`& > div`]: {
+          animation: `${animEffect31} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards`,
+          [`&:nth-child(2)`]: {
+            'animation-name': animEffect32,
+          },
+          [`&:nth-child(3)`]: {
+            'animation-name': animEffect33,
+          },
+        },
+      };
     }
     if (preset === 'content-move') {
-      return css`
-        & > div {
-          animation: ${animEffect41} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19)
-            forwards;
-
-          &:nth-child(2) {
-            animation-name: ${animEffect42};
-            animation-timing-function: cubic-bezier(0.895, 0.03, 0.685, 0.22);
-          }
-
-          &:nth-child(3) {
-            animation-name: ${animEffect43};
-            animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-          }
-        }
-      `;
+      allStyles = {
+        ...allStyles,
+        [`& > div`]: {
+          animation: `${animEffect41} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19)forwards`,
+          [`&:nth-child(2)`]: {
+            'animation-name': animEffect42,
+            'animation-timing-function':
+              'cubic-bezier(0.895, 0.03, 0.685, 0.22)',
+          },
+          [`&:nth-child(3)`]: {
+            'animation-name': animEffect43,
+            'animation-timing-function':
+              'cubic-bezier(0.755, 0.05, 0.855, 0.06)',
+          },
+        },
+      };
     }
   }
-  return null;
+
+  return css(allStyles);
 };
 
 const presetConfig = {
@@ -175,15 +215,13 @@ const presetConfig = {
   },
 };
 
-const RevealerDiv = styled.div`
+const Revealer = styled('div', React.forwardRef)`
   position: fixed;
   z-index: 1000;
   pointer-events: none;
-  ${getStyles}
-  ${getAnimationStyle}
 `;
 
-const RevealerLayerDiv = styled.div`
+const RevealerLayer = styled('div')`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -191,6 +229,26 @@ const RevealerLayerDiv = styled.div`
   left: 0;
   background: #ddd;
 `;
+
+const PageLayers = ({
+  numOfLayers,
+  layerColors,
+  onAnimationEnd,
+}: {
+  layerColors: string[];
+  numOfLayers: number;
+  onAnimationEnd: () => void;
+}) => (
+  <>
+    {Array.from(new Array(numOfLayers), (_, index) => (
+      <RevealerLayer
+        key={index}
+        style={{ background: layerColors[index] }}
+        onAnimationEnd={onAnimationEnd}
+      />
+    ))}
+  </>
+);
 
 export const MultiLayerPageRevealProvider = ({
   preset = 'simple',
@@ -230,7 +288,7 @@ export const MultiLayerPageRevealProvider = ({
 
   const { windowWidth, windowHeight } = windowSize;
 
-  const onEndAnimation = () => {
+  const handleAnimationEnd = () => {
     ++refLayersCounter.current;
 
     if (refLayersCounter.current === config.numOfLayers) {
@@ -240,20 +298,6 @@ export const MultiLayerPageRevealProvider = ({
         onEnd(direction);
       }
     }
-  };
-
-  const addLayers = () => {
-    const layers = [];
-    for (let i = 0; i < config.numOfLayers; i++) {
-      layers.push(
-        <RevealerLayerDiv
-          key={i}
-          style={{ background: config.layerColors[i] }}
-          onAnimationEnd={onEndAnimation}
-        />
-      );
-    }
-    return layers;
   };
 
   const reveal = (callback?: () => void, callbackTime?: number) => {
@@ -274,14 +318,10 @@ export const MultiLayerPageRevealProvider = ({
   };
 
   const getRevealerStyle = () => {
-    let width = '';
-    let height = '';
-    let transform = '';
-
     const pageDiagonal = Math.sqrt(windowWidth ** 2 + windowHeight ** 2);
-
-    width = `${pageDiagonal}px`;
-    height = `${pageDiagonal}px`;
+    const width = `${pageDiagonal}px`;
+    const height = `${pageDiagonal}px`;
+    let transform = '';
 
     if (direction === 'cornerTopLeft') {
       transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, 135deg) translate3d(0, ${pageDiagonal}px, 0)`;
@@ -333,18 +373,18 @@ export const MultiLayerPageRevealProvider = ({
   return (
     <MultiLayerPageRevealContext.Provider value={contextValue}>
       {children}
-      <RevealerDiv
+      <Revealer
         ref={refRevealer}
-        preset={preset}
-        isAnimating={isAnimating}
-        direction={direction}
-        windowWidth={windowWidth}
-        windowHeight={windowHeight}
         data-testid="react-multilayer-page-reveal"
+        className={RevealerClassName({ direction, isAnimating, preset })}
         style={{ ...getRevealerStyle() }}
       >
-        {addLayers()}
-      </RevealerDiv>
+        <PageLayers
+          numOfLayers={config.numOfLayers}
+          layerColors={config.layerColors}
+          onAnimationEnd={handleAnimationEnd}
+        />
+      </Revealer>
     </MultiLayerPageRevealContext.Provider>
   );
 };

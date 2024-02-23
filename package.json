@@ -123,5 +123,8 @@
     "parse-url": ">=8.1.0",
     "trim": ">=0.0.3",
     "trim-newlines": ">=3.0.1"
+  },
+  "dependencies": {
+    "goober": "2.1.14"
   }
 }

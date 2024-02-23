@@ -1,4 +1,4 @@
-import { keyframes } from 'styled-components';
+import { keyframes } from 'goober';
 
 export const animEffect33 = keyframes`
 	0%,
