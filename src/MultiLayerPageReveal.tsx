@@ -34,7 +34,7 @@ type Direction =
 
 type Preset = 'simple' | 'duo-move' | 'triple-woosh' | 'content-move';
 
-type Props = {
+type MultiLayerPageRevealProps = {
   children?: React.ReactNode;
   direction?: Direction;
   layerColors?: string[];
@@ -43,14 +43,15 @@ type Props = {
   preset?: Preset;
 };
 
-type RevealerProps = {
-  direction?: Direction;
-  isAnimating?: boolean;
-  preset?: Preset;
-};
-
 type ContextValues = {
   reveal: (callback?: () => void, callbackTime?: number) => void;
+};
+
+type PresetConfig = {
+  [P in Preset]: {
+    layerColors: string[];
+    numOfLayers: number;
+  };
 };
 
 const MultiLayerPageRevealContext = createContext({} as ContextValues);
@@ -59,7 +60,11 @@ const RevealerClassName = ({
   direction,
   isAnimating,
   preset,
-}: RevealerProps) => {
+}: {
+  direction?: Direction;
+  isAnimating?: boolean;
+  preset?: Preset;
+}) => {
   const opacity = isAnimating ? '1' : '0';
   let allStyles = {};
 
@@ -196,7 +201,7 @@ const RevealerClassName = ({
   return css(allStyles);
 };
 
-const presetConfig = {
+const presetConfig: PresetConfig = {
   simple: {
     numOfLayers: 1,
     layerColors: ['#202023'],
@@ -240,7 +245,7 @@ const PageLayers = ({
   onAnimationEnd: () => void;
 }) => (
   <>
-    {Array.from(new Array(numOfLayers), (_, index) => (
+    {Array.from(Array(numOfLayers), (_, index) => (
       <RevealerLayer
         key={index}
         style={{ background: layerColors[index] }}
@@ -257,7 +262,7 @@ export const MultiLayerPageRevealProvider = ({
   onEnd,
   layerColors,
   children,
-}: Props) => {
+}: MultiLayerPageRevealProps) => {
   const [windowSize, setWindowSize] = useState({
     windowWidth: 0,
     windowHeight: 0,
@@ -268,10 +273,10 @@ export const MultiLayerPageRevealProvider = ({
   const refLayersCounter = useRef(0);
 
   const config = useMemo(() => {
-    let currentConfig = presetConfig[preset as keyof typeof presetConfig];
+    let currentConfig = presetConfig[preset];
     if (layerColors) {
       if (!Array.isArray(layerColors)) {
-        throw new Error('layerColors is not an array.');
+        throw new Error('"layerColors" expects an array.');
       }
       if (layerColors.length !== currentConfig.layerColors.length) {
         throw new Error(
