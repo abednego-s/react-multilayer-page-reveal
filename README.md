@@ -13,13 +13,13 @@ A React component that adds multi-layer page transitions using CSS Animations. I
 using npm
 
 ```bash
-  npm install react-multilayer-page-reveal styled-components
+  npm install react-multilayer-page-reveal
 ```
 
 using yarn
 
 ```bash
-  yarn add react-multilayer-page-reveal styled-components
+  yarn add react-multilayer-page-reveal
 ```
 
 ## Usage/Examples
