@@ -22,7 +22,7 @@ import { debounce } from './utils';
 
 setup(React.createElement);
 
-type Direction =
+export type Direction =
   | 'left'
   | 'right'
   | 'top'
@@ -32,9 +32,9 @@ type Direction =
   | 'cornerBottomLeft'
   | 'cornerBottomRight';
 
-type Preset = 'simple' | 'duo-move' | 'triple-woosh' | 'content-move';
+export type Preset = 'simple' | 'duo-move' | 'triple-woosh' | 'content-move';
 
-type MultiLayerPageRevealProps = {
+export type MultiLayerPageRevealProps = {
   children?: React.ReactNode;
   direction?: Direction;
   layerColors?: string[];
@@ -47,7 +47,7 @@ type ContextValues = {
   reveal: (callback?: () => void, callbackTime?: number) => void;
 };
 
-type PresetConfig = {
+export type PresetConfig = {
   [P in Preset]: {
     layerColors: string[];
     numOfLayers: number;
@@ -97,19 +97,26 @@ const RevealerClassName = ({
       direction === 'top' ? 'rotate3d(0, 0, 1, 180deg)' : 'none';
 
     let style: Partial<CSSStyleDeclaration> = {
-      left: '0',
-      width: '100vh',
-      height: '100vw',
+      width: '100vw',
+      height: '100vh',
       transform,
       opacity,
     };
 
-    if (direction === 'top') {
-      style = {
-        ...style,
-        bottom: '100%',
-        top: '100%',
-      };
+    if (isAnimating) {
+      if (direction === 'top') {
+        style = {
+          ...style,
+          left: '0',
+          bottom: '100%',
+        };
+      } else {
+        style = {
+          ...style,
+          left: '0',
+          top: '100%',
+        };
+      }
     }
 
     allStyles = {
@@ -289,7 +296,7 @@ export const MultiLayerPageRevealProvider = ({
       };
     }
     return currentConfig;
-  }, [layerColors]);
+  }, [layerColors, preset]);
 
   const { windowWidth, windowHeight } = windowSize;
 
