@@ -2,24 +2,14 @@
 
 A React component that adds multi-layer page transitions using CSS Animations. Inspired by Multi-Layer Page Reveal Effects by Codrops. Original repo: https://github.com/codrops/PageRevealEffects
 
-<br />
+## Documentation
 
-[Demo](https://codesandbox.io/p/sandbox/react-multilayer-page-reveal-example-i3wfmc?file=%2Fsrc%2FApp.tsx)
-
-<br />
+[Documentation](https://abednego-s.github.io/react-multilayer-page-reveal-docs/)
 
 ## Installation
 
-using npm
-
 ```bash
   npm install react-multilayer-page-reveal
-```
-
-using yarn
-
-```bash
-  yarn add react-multilayer-page-reveal
 ```
 
 ## Usage/Examples
@@ -149,3 +139,7 @@ If no layer colors provided, these default colors will be applied:
 `triple-woosh`: <br>['#0092dd', '#fff', '#3e3a35'],
 
 `content-move`: <br>['#202023', '#555', '#d1d1d1']
+
+## Contributing
+
+Pull requests are warmly welcomed. However, for significant changes, kindly initiate an issue beforehand to engage in discussion about the proposed changes.
