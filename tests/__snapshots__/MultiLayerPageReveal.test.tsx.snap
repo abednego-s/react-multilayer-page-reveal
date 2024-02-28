@@ -9,7 +9,7 @@ exports[`should render with "bottom" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="go3222113742 go2881691481"
+        class="go3222113742 go3866801122"
         data-testid="react-multilayer-page-reveal"
       >
         <div
@@ -24,7 +24,7 @@ exports[`should render with "bottom" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="go3222113742 go2881691481"
+      class="go3222113742 go3866801122"
       data-testid="react-multilayer-page-reveal"
     >
       <div
@@ -737,7 +737,7 @@ exports[`should render with "top" direction 1`] = `
         Hello World
       </h1>
       <div
-        class="go3222113742 go3617245210"
+        class="go3222113742 go591487327"
         data-testid="react-multilayer-page-reveal"
       >
         <div
@@ -752,7 +752,7 @@ exports[`should render with "top" direction 1`] = `
       Hello World
     </h1>
     <div
-      class="go3222113742 go3617245210"
+      class="go3222113742 go591487327"
       data-testid="react-multilayer-page-reveal"
     >
       <div
