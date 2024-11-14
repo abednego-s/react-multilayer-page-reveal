@@ -104,16 +104,18 @@ const RevealerClassName = ({
     };
 
     if (isAnimating) {
+      style = {
+        ...style,
+        left: '0',
+      };
       if (direction === 'top') {
         style = {
           ...style,
-          left: '0',
           bottom: '100%',
         };
       } else {
         style = {
           ...style,
-          left: '0',
           top: '100%',
         };
       }
@@ -152,56 +154,64 @@ const RevealerClassName = ({
   }
 
   if (isAnimating) {
-    if (preset === 'simple') {
-      allStyles = {
-        ...allStyles,
-        [`& > div`]: {
-          animation: `${animEffect1} 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards`,
-        },
-      };
-    }
-    if (preset === 'duo-move') {
-      allStyles = {
-        ...allStyles,
-        [`& > div`]: {
-          animation: `${animEffect21} 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards`,
-          [`&:nth-child(2)`]: {
-            'animation-name': animEffect22,
+    switch (preset) {
+      case 'simple':
+        allStyles = {
+          ...allStyles,
+          [`& > div`]: {
+            animation: `${animEffect1} 1.5s cubic-bezier(0.2, 1, 0.3, 1) forwards`,
           },
-        },
-      };
-    }
-    if (preset === 'triple-woosh') {
-      allStyles = {
-        ...allStyles,
-        [`& > div`]: {
-          animation: `${animEffect31} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards`,
-          [`&:nth-child(2)`]: {
-            'animation-name': animEffect32,
+        };
+        break;
+
+      case 'duo-move':
+        allStyles = {
+          ...allStyles,
+          [`& > div`]: {
+            animation: `${animEffect21} 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards`,
+            [`&:nth-child(2)`]: {
+              'animation-name': animEffect22,
+            },
           },
-          [`&:nth-child(3)`]: {
-            'animation-name': animEffect33,
+        };
+        break;
+
+      case 'content-move':
+        allStyles = {
+          ...allStyles,
+          [`& > div`]: {
+            animation: `${animEffect41} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19)forwards`,
+            [`&:nth-child(2)`]: {
+              'animation-name': animEffect42,
+              'animation-timing-function':
+                'cubic-bezier(0.895, 0.03, 0.685, 0.22)',
+            },
+            [`&:nth-child(3)`]: {
+              'animation-name': animEffect43,
+              'animation-timing-function':
+                'cubic-bezier(0.755, 0.05, 0.855, 0.06)',
+            },
           },
-        },
-      };
-    }
-    if (preset === 'content-move') {
-      allStyles = {
-        ...allStyles,
-        [`& > div`]: {
-          animation: `${animEffect41} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19)forwards`,
-          [`&:nth-child(2)`]: {
-            'animation-name': animEffect42,
-            'animation-timing-function':
-              'cubic-bezier(0.895, 0.03, 0.685, 0.22)',
+        };
+        break;
+
+      case 'triple-woosh':
+        allStyles = {
+          ...allStyles,
+          [`& > div`]: {
+            animation: `${animEffect31} 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards`,
+            [`&:nth-child(2)`]: {
+              'animation-name': animEffect32,
+            },
+            [`&:nth-child(3)`]: {
+              'animation-name': animEffect33,
+            },
           },
-          [`&:nth-child(3)`]: {
-            'animation-name': animEffect43,
-            'animation-timing-function':
-              'cubic-bezier(0.755, 0.05, 0.855, 0.06)',
-          },
-        },
-      };
+        };
+        break;
+
+      default:
+        break;
     }
   }
 
@@ -335,29 +345,39 @@ export const MultiLayerPageRevealProvider = ({
     const height = `${pageDiagonal}px`;
     let transform = '';
 
-    if (direction === 'cornerTopLeft') {
-      transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, 135deg) translate3d(0, ${pageDiagonal}px, 0)`;
-    } else if (direction === 'cornerTopRight') {
-      transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, -135deg) translate3d(0, ${pageDiagonal}px, 0)`;
-    } else if (direction === 'cornerBottomLeft') {
-      transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, 45deg) translate3d(0, ${pageDiagonal}px, 0)`;
-    } else if (direction === 'cornerBottomRight') {
-      transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, -45deg) translate3d(0, ${pageDiagonal}px, 0)`;
+    switch (direction) {
+      case 'cornerTopLeft':
+        transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, 135deg) translate3d(0, ${pageDiagonal}px, 0)`;
+        break;
+
+      case 'cornerTopRight':
+        transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, -135deg) translate3d(0, ${pageDiagonal}px, 0)`;
+        break;
+
+      case 'cornerBottomLeft':
+        transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, 45deg) translate3d(0, ${pageDiagonal}px, 0)`;
+        break;
+
+      case 'cornerBottomRight':
+        transform = `translate3d(-50%, -50%, 0) rotate3d(0, 0, 1, -45deg) translate3d(0, ${pageDiagonal}px, 0)`;
+        break;
+
+      default:
+        break;
     }
 
-    if (isAnimating) {
-      if (
-        direction === 'cornerTopLeft' ||
+    if (
+      isAnimating &&
+      (direction === 'cornerTopLeft' ||
         direction === 'cornerTopRight' ||
         direction === 'cornerBottomLeft' ||
-        direction === 'cornerBottomRight'
-      ) {
-        return {
-          width,
-          height,
-          transform,
-        };
-      }
+        direction === 'cornerBottomRight')
+    ) {
+      return {
+        width,
+        height,
+        transform,
+      };
     }
 
     return null;
