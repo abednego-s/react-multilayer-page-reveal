@@ -18,7 +18,8 @@ import {
   animEffect42,
   animEffect43,
 } from './keyframes';
-import { debounce } from './utils';
+import { debounce } from './utils/debounce';
+import type { Implements } from './utils/implements';
 
 setup(React.createElement);
 
@@ -34,14 +35,47 @@ export type Direction =
 
 export type Preset = 'simple' | 'duo-move' | 'triple-woosh' | 'content-move';
 
+export type PresetLayerColors = {
+  layerColors?: [string] | [string, string] | [string, string, string];
+  preset?: Preset;
+};
+
+export type LayerColorOptions =
+  | Implements<
+      PresetLayerColors,
+      {
+        layerColors?: [string];
+        preset?: 'simple';
+      }
+    >
+  | Implements<
+      PresetLayerColors,
+      {
+        layerColors?: [string, string];
+        preset?: 'duo-move';
+      }
+    >
+  | Implements<
+      PresetLayerColors,
+      {
+        layerColors?: [string, string, string];
+        preset?: 'triple-woosh';
+      }
+    >
+  | Implements<
+      PresetLayerColors,
+      {
+        layerColors?: [string, string, string];
+        preset?: 'content-move';
+      }
+    >;
+
 export type MultiLayerPageRevealProps = {
   children?: React.ReactNode;
   direction?: Direction;
-  layerColors?: string[];
   onEnd?: (direction: Direction) => void;
   onStart?: (direction: Direction) => void;
-  preset?: Preset;
-};
+} & LayerColorOptions;
 
 type ContextValues = {
   reveal: (callback?: () => void, callbackTime?: number) => void;

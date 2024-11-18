@@ -108,6 +108,7 @@ test('should render with custom layer colors', () => {
 test('should throw an error if custom layer colors invalid', () => {
   expect(() => {
     render(
+      // @ts-expect-error
       <MultiLayerPageRevealProvider preset="duo-move" layerColors={['#fff']}>
         <h1>Hello World</h1>
       </MultiLayerPageRevealProvider>
